@@ -1,7 +1,9 @@
 const bodyParser = require("body-parser");
 const express = require("express");
-const Contact = require("../models/contact");
+const contacts = require("../models/contact");
 const router = express.Router();
+const { validateToken } = require("../Middlewares/AuthMiddleware");
+const user = require("../models/user");
 
 
 router.use(bodyParser.json());
@@ -22,7 +24,7 @@ router.post("/post", async (req,res) => {
             // user: req.user
         });
         res.json({
-            status: "Sucess",
+            status: "Success",
             contact
     
         });
@@ -34,6 +36,34 @@ router.post("/post", async (req,res) => {
         })
     }
 })
+router.get("/username", validateToken, async (req, res) => {
+    const data = await user.findOne({ _id: req.user });
+    res.json(data);
+  });
+  
+  router.get("/all", validateToken, async (req, res) => {
+    try {
+      const { page } = req.query;
+  
+      const data = await contacts
+        .find({ userid: req.user })
+        .skip((page - 1) * 10)
+        .limit(10);
+      res.json(data);
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+    }
+  });
+  
+  
+  router.get("/alldata", validateToken, async (req, res) => {
+    try {
+      const data = await contacts.find({ userid: req.user })
+      res.json(data);
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+    }
+  });
 
 
 module.exports = router
