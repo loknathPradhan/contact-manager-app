@@ -80,6 +80,17 @@ router.get("/contact", async (req, res) => {
         })
     }
 })
+router.get("/contact", async (req, res) => {
+    try {
+        const contact = await Contact.find({user: req.user});
+        res.send(({ message: "sucessfully saved",contact: contact }));
+    } catch (error) {
+        res.status(500).json({
+            status: "Failed",
+            message: error.message
+        })
+    }
+})
 
 
 
