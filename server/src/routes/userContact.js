@@ -8,7 +8,7 @@ const { default: mongoose } = require("mongoose");
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
-router.post("/post", async (req, res) => {
+router.post("/contact", async (req, res) => {
     try {
 
         let contactArray = req.body;
@@ -24,14 +24,12 @@ router.post("/post", async (req, res) => {
                 email: email,
                 phone: phone,
                 country: country,
-                // user: req.user
-            });
+                user: req.user
+            }, function (err, data) {if(err) {console.log(err)}});
         });
 
         res.json({
-            status: "Sucess",
-            // contact
-
+            status: "Success",
         });
 
     } catch (error) {
@@ -43,7 +41,7 @@ router.post("/post", async (req, res) => {
 });
 
 
-router.delete("/delete", async (req, res) => {
+router.delete("/contact", async (req, res) => {
 
     try {
 

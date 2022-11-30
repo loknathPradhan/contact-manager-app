@@ -7,8 +7,8 @@ const contactSchema = new Schema({
     industry: String,
     email: {type: String, unique : true},
     phone: Number,
-    country: String
-    // user : {type: Schema.Types.ObjectId, ref: "User"}
+    country: String,
+    user : {type: Schema.Types.ObjectId, ref: "User"}
 })
 
 const contactModel = mongoose.model("Contact", contactSchema);
