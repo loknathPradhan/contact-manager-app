@@ -38,7 +38,7 @@ app.use("/contact", (req,res,next) => {
 });
 
 
-app.use("/singup" , signupRoutes)
-app.use("/singin" , signinRoutes)
+app.use("/signup" , signupRoutes)
+app.use("/signin" , signinRoutes)
 app.use("/contact" ,contactRoutes);
 app.listen(8000,()=> console.log("The server is up at 8000..."));

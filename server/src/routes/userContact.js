@@ -48,14 +48,14 @@ router.delete("/contact", async (req, res) => {
         let deletArray = req.body;
         if (deletArray.length > 0) {
             deletArray = deletArray.map((d) => mongoose.Types.ObjectId(d));
-            const contact = await Contact.deleteMany({ _id: { $in: deletArray } });
+            const contact = await Contact.deleteMany({$and:[{ _id: { $in: deletArray } },{user: req.user}]});
             res.json({
                 status: 'success',
                 contact
             })
         }
         else {
-            const contact = await Contact.deleteMany();
+            const contact = await Contact.deleteMany({user: req.user});
             res.json({
                 status: 'success',
                 contact
@@ -80,9 +80,9 @@ router.get("/contact", async (req, res) => {
         })
     }
 })
-router.get("/contact", async (req, res) => {
+router.get("/contact/:email", async (req, res) => {
     try {
-        const contact = await Contact.find({user: req.user});
+        const contact = await Contact.findOne({$and : [{email: req.params.email},{user: req.user}]});
         res.send(({ message: "sucessfully saved",contact: contact }));
     } catch (error) {
         res.status(500).json({
