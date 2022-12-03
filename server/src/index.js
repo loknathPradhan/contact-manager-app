@@ -80,6 +80,7 @@ app.listen(process.env.PORT || 3000, () => {
 });
 
 mongoose.connect(
-  "mongodb://localhost:27017/contactApp_DB"
+  // "mongodb://localhost:27017/contactApp_DB"
+  "mongodb+srv://sayan:sayan@cluster0.ennis95.mongodb.net/?retryWrites=true&w=majority"
   )
   .then(() => console.log("db connected"));
