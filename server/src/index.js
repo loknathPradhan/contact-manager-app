@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 const contact = require("../datamodel/contacts");
 const bodyParser = require("body-parser");
 const routes = require("../routes/userRoutes");
+const env = require("dotenv")
+env.config();
 app.use(routes);
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -75,12 +77,13 @@ app.delete("/emptycontacts", async (req, res) => {
     }).clone();
 });
 
-app.listen(process.env.PORT || 3000, () => {
+app.listen(process.env.PORT || 5000, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
 
 mongoose.connect(
   // "mongodb://localhost:27017/contactApp_DB"
-  "mongodb+srv://sayan:sayan@cluster0.ennis95.mongodb.net/?retryWrites=true&w=majority"
+  // "mongodb+srv://sayan:sayan@cluster0.ennis95.mongodb.net/?retryWrites=true&w=majority"
+  process.env.URL
   )
   .then(() => console.log("db connected"));

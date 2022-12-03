@@ -8,6 +8,8 @@ const jwt = require("jsonwebtoken");
 const JWT_SECRET_KEY = "fdnbgkd656d5g6dfgmnbdfjfg";
 const userAuthentication = require("../middlewares/jwt-authentication");
 const bodyParser = require("body-parser");
+const env = require("dotenv")
+env.config();
 
 // const fileupload = require("express-fileupload");
 const path = require("path");
@@ -64,7 +66,7 @@ router.post("/login", async (req, res) => {
       });
     } else {
       const isPasswordMatching = await bcrypt.compare(password, userdetails.password);
-      const token = jwt.sign({email:email,id:userdetails._id}, JWT_SECRET_KEY, {
+      const token = jwt.sign({email:email,id:userdetails._id}, process.env.JWT_SECRET_KEY, {
         expiresIn: "5d",
       });
       if (isPasswordMatching) {
