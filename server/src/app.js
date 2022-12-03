@@ -7,16 +7,23 @@ const signinRoutes = require("./routes/signIn")
 var jwt = require("jsonwebtoken");
 const secret = "CONTACTAPI";
 
+const cors = require('cors');
+app.use(cors());
 
+// --------------------providing authorization -----------------------
 app.get("/" ,(req,res)=> {
     res.send("ok")
 });
 app.use("/contact", (req,res,next) => {
-    if (req.headers.authorization) {
-        const token = req.headers.authorization;
+    // console.log("hello form verify")
+    // console.log(req.headers.auth);
+    if (req.headers.auth) {
+        const token = req.headers.auth;
+        // console.log(token)
         if (token) {        
             jwt.verify(token, secret, function (err, decoded) {
                 if(err){
+                    console.log("form error")
                     return res.status(403).json({
                         status: "failed",
                         message: "Invalid token"
