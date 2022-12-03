@@ -36,6 +36,7 @@ const Searchbar = ({
 
   useEffect(() => {
     if (searctText !== "") {
+      // console.log(filewithoutnpm.Email)
       const newContactList = filewithoutnpm?.datas?.filter((obj) => {
         let emailId = obj.Email;
         let value=0
@@ -44,6 +45,7 @@ const Searchbar = ({
         }
         return value;
       });
+      console.log(newContactList)
       if (newContactList.length !== 0) {
         setShowEmail(() => {
           return {
